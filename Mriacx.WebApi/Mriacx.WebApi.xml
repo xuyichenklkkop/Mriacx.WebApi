@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mriacx.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:Mriacx.WebApi.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mriacx.WebApi.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="env"></param>
+        </member>
+        <member name="P:Mriacx.WebApi.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mriacx.WebApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>        
+        </member>
+        <member name="M:Mriacx.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+            <param name="apiExplorer"></param>
+        </member>
+    </members>
+</doc>
