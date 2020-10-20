@@ -9,6 +9,7 @@ namespace Mriacx.Dao
 {
     public class OrderDao: BaseDao<OrderQueue>
     {
+        #region OrderQueue
         /// <summary>
         /// 获取所有订单列表
         /// </summary>
@@ -17,5 +18,17 @@ namespace Mriacx.Dao
             var list = DbContext.GetList<OrderQueue>().ToList();
             return list;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oQueue"></param>
+        /// <returns></returns>
+        public int UpdateOrder(OrderQueue oQueue)
+        {
+           return  DbContext.Update(oQueue);
+        } 
+
+        #endregion
     }
 }

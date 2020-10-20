@@ -15,6 +15,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Mriacx.WebApi.Controllers.OrderController.UpdateOrder(Mriacx.Entity.OrderQueue)">
+            <summary>
+            
+            </summary>
+            <param name="orderQueue"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mriacx.WebApi.Startup">
             <summary>
             
