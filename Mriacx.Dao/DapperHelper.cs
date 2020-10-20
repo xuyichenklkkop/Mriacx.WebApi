@@ -31,7 +31,7 @@ namespace Mriacx.Utility
         /// </summary>
         private DapperHelper(IConfiguration configuration)
         {
-             _connection = configuration.GetConnectionString("");
+             _connection = configuration.GetConnectionString("DefaultConnection");
             //_connection = @"server=.;uid=sa;pwd=sasasa;database=Dapper";
         }
 

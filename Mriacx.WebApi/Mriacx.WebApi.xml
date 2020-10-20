@@ -4,6 +4,17 @@
         <name>Mriacx.WebApi</name>
     </assembly>
     <members>
+        <member name="T:Mriacx.WebApi.Controllers.OrderController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mriacx.WebApi.Controllers.OrderController.GetOrderQueueList">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Mriacx.WebApi.Startup">
             <summary>
             
