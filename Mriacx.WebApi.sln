@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mriacx.Dao", "Mriacx.Dao\Mr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mriacx.Service", "Mriacx.Service\Mriacx.Service.csproj", "{BE1821E2-8F8B-428A-B9E1-D760DF7C5331}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mriacx.Entity", "Mriacx.Entity\Mriacx.Entity.csproj", "{76899F86-3276-4731-8C32-69D77C8386DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mriacx.Entity", "Mriacx.Entity\Mriacx.Entity.csproj", "{76899F86-3276-4731-8C32-69D77C8386DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mriacx.Extend", "Mriacx.Extend\Mriacx.Extend.csproj", "{58A7146A-F895-43C8-A6A4-A1216F422958}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{76899F86-3276-4731-8C32-69D77C8386DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76899F86-3276-4731-8C32-69D77C8386DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76899F86-3276-4731-8C32-69D77C8386DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A7146A-F895-43C8-A6A4-A1216F422958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A7146A-F895-43C8-A6A4-A1216F422958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A7146A-F895-43C8-A6A4-A1216F422958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A7146A-F895-43C8-A6A4-A1216F422958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

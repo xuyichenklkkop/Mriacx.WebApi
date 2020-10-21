@@ -8,6 +8,7 @@ namespace Mriacx.Entity
     /// </summary>
     public class OrderInfo
     {
+        
         public long Id { get;set; }
 
         /// <summary>
