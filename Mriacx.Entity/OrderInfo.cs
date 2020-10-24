@@ -44,17 +44,6 @@ namespace Mriacx.Entity
         /// 电话
         /// </summary>
         public string CoTelPhone { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        /// <summary>
-        ///  0:默认 1审核确认中 2：生产中
-        /// </summary>
-        public int Status { get; set; }
-
-        /// <summary>
-        /// 数量
-        /// </summary>
-        public int Num { get; set; }
+      
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -52,18 +51,7 @@ namespace Mriacx.Utility.Common
             return dd;
         }
 
-        /// <summary>
-        /// Clone
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static T Clone<T>(this T value) //where T : class
-        {
-            var valueJson = JsonConvert.SerializeObject(value);
-            var rsult = JsonConvert.DeserializeObject<T>(valueJson);
-            return rsult;
-        }
+       
 
         /// <summary>
         /// 

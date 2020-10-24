@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mriacx.Entity\Mriacx.Entity.csproj" />
+    <ProjectReference Include="..\Mriacx.Extend\Mriacx.Utility.csproj" />
   </ItemGroup>
 
 </Project>

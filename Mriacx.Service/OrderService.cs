@@ -32,6 +32,26 @@ namespace Mriacx.Service
         }
 
         /// <summary>
+        /// 根据OrderNum获取订单
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public OrderModel GetOrderModel(string orderNum)
+        {
+            return orderDao.GetOrderModel(orderNum);
+        }
+
+        /// <summary>
+        /// 创建订单
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public BaseMessage CreateOrderAndInfo(OrderModel model)
+        {
+            return orderDao.CreateOrderAndInfo(model);
+        }
+
+        /// <summary>
         /// 完成订单
         /// </summary>
         /// <param name="orderNum"></param>

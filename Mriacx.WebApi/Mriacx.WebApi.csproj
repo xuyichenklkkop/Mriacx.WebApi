@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mriacx.Extend\Mriacx.Utility.csproj" />
     <ProjectReference Include="..\Mriacx.Service\Mriacx.Service.csproj" />
-    <ProjectReference Include="..\Mriacx.Utility\Mriacx.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

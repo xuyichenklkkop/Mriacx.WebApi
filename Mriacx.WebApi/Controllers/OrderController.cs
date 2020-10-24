@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mriacx.Entity;
 using Mriacx.Entity.Model;
 using Mriacx.Service;
+using Newtonsoft.Json;
 
 namespace Mriacx.WebApi.Controllers
 {
@@ -23,21 +24,42 @@ namespace Mriacx.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult GetOrderQueueList()
+        public List<OrderQueue> GetOrderQueueList()
         {
-           var list = service.GetList();
-            return Json(list);
+            var list = service.GetList();
+            return list;
         }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>getorderqueueandinfolist
+        [HttpGet]
+        public List<OrderModel> GetOrderQueueAndInfoList()
+        {
+            return service.GetOrderQueueAndInfoList();
+        }
+
+        /// <summary>
+        /// 根据OrderNum获取订单
+        /// </summary>
+        /// <param name="orderNum"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult GetOrderQueueAndInfoList()
+        public OrderModel GetOrderModel(string orderNum)
         {
-            var list = service.GetOrderQueueAndInfoList();
-            return Json(list); ;
+            return service.GetOrderModel(orderNum);
+        }
+
+        /// <summary>
+        /// 创建订单
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public BaseMessage CreateOrderAndInfo([FromBody]OrderModel model)
+        {
+            return service.CreateOrderAndInfo(model);
         }
 
         /// <summary>
@@ -49,9 +71,6 @@ namespace Mriacx.WebApi.Controllers
         {
             return service.MoveOrderToHistory(orderNum);
         }
-
-
-
 
         /// <summary>
         /// 完成订单并挪到OrderHistory

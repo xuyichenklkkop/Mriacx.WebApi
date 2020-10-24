@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Mriacx.Entity;
 using Mriacx.Entity.Model;
+using Mriacx.Utility.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,6 +54,12 @@ namespace Mriacx.Dao
         public BaseMessage MoveOrderToHistory(string orderNum)
         {
             BaseMessage response = new BaseMessage() { IsSuccess = true };
+            if (string.IsNullOrWhiteSpace(orderNum))
+            {
+                response.IsSuccess = false;
+                response.Msg = "参数不能为空";
+                return response;
+            }
             var item = DbContext.GetList<OrderQueue>("where OrderNum = @OrderNum", new { OrderNum = orderNum }).FirstOrDefault();
             if (item == null || item.Id <= 0)
             {
@@ -60,6 +67,7 @@ namespace Mriacx.Dao
                 response.Msg = $"未找到订单：{orderNum}";
                 return response;
             }
+
             using (DbContext)
             {
                 DbContext.Open();
@@ -80,6 +88,73 @@ namespace Mriacx.Dao
             }
             response.Msg = "执行成功";
             return response;
+        }
+
+        /// <summary>
+        /// 根据OrderNum获取订单实体
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public OrderModel GetOrderModel(string orderNum)
+        {
+            var sql = "select oq.OrderNum,oq.CreateTime,oq.Status,oq.Num,oi.HQID,oi.FontType," +
+               "oi.Content,oi.SignName,oi.CoName,oi.CoAddr,oi.CoTelPhone " +
+               "from OrderQueue oq inner join OrderInfo oi on oq.OrderNum = oi.HQID " +
+               "where oq.OrderNum = @OrderNum;";
+            var item = DbContext.Query<OrderModel>(sql, new { OrderNum = orderNum }).FirstOrDefault();
+            return item;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public BaseMessage CreateOrderAndInfo(OrderModel model)
+        {
+            BaseMessage respose = new BaseMessage()
+            {
+                IsSuccess = false,
+                Msg = ""
+            };
+            var createTime = DateTime.Now;
+            OrderQueue orderQueue = new OrderQueue()
+            {
+                CreateTime = createTime,
+                Num = model.Num,
+                Status = 0,
+                OrderNum = GuidCreator.GetUniqueKey("INK")
+            };
+
+            OrderInfo info = new OrderInfo()
+            {
+                CoAddr = model.CoAddr,
+                CoName = model.CoName,
+                Content = model.Content??"",
+                CoTelPhone = model.CoTelPhone,
+                FontType = model.FontType,
+                HQID = orderQueue.OrderNum,
+                SignName = model.SignName
+            };
+
+            using (DbContext)
+            {
+                DbContext.Open();
+                var trans = DbContext.BeginTransaction();
+                try
+                {
+                    DbContext.Insert(orderQueue, trans);
+                    DbContext.Insert(info, trans);
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    respose.Msg = "异常"+ex.ToString();
+                }
+            }
+            respose.IsSuccess = true;
+            respose.Msg = "创建成功";
+            return respose;
         }
         #endregion
     }
