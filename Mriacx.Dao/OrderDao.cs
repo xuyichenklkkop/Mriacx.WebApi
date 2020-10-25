@@ -24,6 +24,18 @@ namespace Mriacx.Dao
         }
 
         /// <summary>
+        /// 根据订单号获取orderNum
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public OrderQueue GetOrderQueueByOrderNum(string orderNum)
+        {
+            var sql = "select * from OrderQueue where OrderNum=@OrderNum order by CreateTime desc;";
+            var item = DbContext.QuerySingle<OrderQueue>(sql, new { OrderNum = orderNum });
+            return item;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="oQueue"></param>
