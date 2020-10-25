@@ -60,6 +60,11 @@ namespace Mriacx.Utility
             {
                 dbConnection = new SqlConnection(Connection);
             }
+            //判断连接状态
+            if (dbConnection.State == ConnectionState.Closed)
+            {
+                dbConnection.Open();
+            }
             return dbConnection;
         }
 

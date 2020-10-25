@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mriacx.Entity;
 using Mriacx.Entity.Model;
 using Mriacx.Service;
@@ -31,6 +32,17 @@ namespace Mriacx.WebApi.Controllers
         }
 
         /// <summary>
+        /// 根据订单号获取orderNum
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public OrderQueue GetOrderQueueByOrderNum(string orderNum) 
+        {
+            return service.GetOrderQueueByOrderNum(orderNum);
+        }
+
+        #region OrderModel
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>getorderqueueandinfolist
@@ -57,10 +69,11 @@ namespace Mriacx.WebApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public BaseMessage CreateOrderAndInfo([FromBody]OrderModel model)
+        public BaseMessage CreateOrderAndInfo([FromBody] OrderModel model)
         {
             return service.CreateOrderAndInfo(model);
-        }
+        } 
+        #endregion
 
         /// <summary>
         /// 完成订单
@@ -83,7 +96,23 @@ namespace Mriacx.WebApi.Controllers
             return Json(result);
         }
 
-        
+        /// <summary>
+        /// 审核订单状态
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public BaseMessage AuditOrderStatus(string orderNum,int status) 
+        {
+            BaseMessage response = new BaseMessage() { IsSuccess = false };
+            if (string.IsNullOrWhiteSpace(orderNum))
+            {
+                response.Msg = "参数为空";
+                return response;
+            }
+            return service.AuditOrderStatus(orderNum,status);
+        }
 
     }
 }
