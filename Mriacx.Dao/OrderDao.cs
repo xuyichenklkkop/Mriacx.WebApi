@@ -19,6 +19,7 @@ namespace Mriacx.Dao
         /// </summary>
         public List<OrderQueue> GetList()
         {
+            
             var list = DbContext.GetList<OrderQueue>().ToList();
             return list;
         }
@@ -80,10 +81,8 @@ namespace Mriacx.Dao
                 return response;
             }
 
-            using (DbContext)
+            using (var trans = DbContext.BeginTransaction())
             {
-                DbContext.Open();
-                var trans = DbContext.BeginTransaction();
                 var delQueueSql = "delete from OrderQueue where OrderNum = @OrderNum"  ;
                 var intQueueResult = DbContext.Execute(delQueueSql, new { OrderNum = orderNum }, trans);
                 var delInfoSql = "delete from OrderInfo where HQID =@OrderNum";
@@ -148,10 +147,8 @@ namespace Mriacx.Dao
                 SignName = model.SignName
             };
 
-            using (DbContext)
+            using (var trans = DbContext.BeginTransaction())
             {
-                DbContext.Open();
-                var trans = DbContext.BeginTransaction();
                 try
                 {
                     DbContext.Insert(orderQueue, trans);
@@ -165,7 +162,7 @@ namespace Mriacx.Dao
                 }
             }
             respose.IsSuccess = true;
-            respose.Msg = "创建成功";
+            respose.Msg = "创单成功";
             return respose;
         }
         #endregion

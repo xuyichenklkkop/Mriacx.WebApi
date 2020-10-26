@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Mriacx.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,13 +11,12 @@ namespace Mriacx.Dao
 {
     public class BaseDao
     {
+        public IDbConnection DbContext { get; }
+
         public BaseDao()
         {
-            DbContextFactory db = new DbContextFactory();
-            DbContext = db.SqlClient;
+            DbContext = DbContextFactory.GetDbContext();
         }
-
-        public IDbConnection DbContext { get; set; }
     }
 
     /// <summary>
@@ -25,34 +25,47 @@ namespace Mriacx.Dao
     /// <typeparam name="T"></typeparam>
     public class BaseDao<T> : BaseDao where T : class, new()
     {
-        ///// <summary>
-        ///// 获取所有列表
-        ///// </summary>
-        ///// <returns></returns>
-        //public List<T> GetAllList()
-        //{
-        //    return DbContext.GetList<T>().ToList();
-        //}
 
-        ///// <summary>
-        ///// 主键获取
-        ///// </summary>
-        ///// <param name="pk"></param>
-        ///// <returns></returns>
-        //public T Get(long pk)
-        //{
-        //   return DbContext.Get<T>(pk);
-        //}
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="t"></param>
-        ///// <returns></returns>
-        //public int Update<T>(T t)
-        //{
-        //   return DbContext.Update(t);
-        //}
+        /// <summary>
+        /// 获取所有列表
+        /// </summary>
+        /// <returns></returns>
+        public List<T> GetAllList()
+        {
+            return DbContext.GetList<T>().ToList();
+        }
+
+        /// <summary>
+        /// 主键获取
+        /// </summary>
+        /// <param name="pk"></param>
+        /// <returns></returns>
+        public T Get(long pk)
+        {
+            return DbContext.Get<T>(pk);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public int Update<T>(T t)
+        {
+            return DbContext.Update(t);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public int Delete<T>(T t) 
+        {
+            return DbContext.Delete(t);
+        }
     }
 }

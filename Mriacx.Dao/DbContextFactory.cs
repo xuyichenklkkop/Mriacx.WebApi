@@ -9,19 +9,18 @@ using System.Text;
 
 namespace Mriacx.Dao
 {
-    public  class DbContextFactory
+    public  static class DbContextFactory
     {
-        public  IDbConnection SqlClient { get; set; }
-
-        public  DbContextFactory()
+        public static IDbConnection GetDbContext()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.Development.json")
-           .Build();
+          .SetBasePath(Directory.GetCurrentDirectory())
+          .AddJsonFile("appsettings.Development.json")
+          .Build();
 
             var dapper = DapperHelper.GetInstance(configuration);
-            SqlClient = dapper.GetConnection();
+            var dbcontext = dapper.GetConnection();
+            return dbcontext;
         }
     }
 }

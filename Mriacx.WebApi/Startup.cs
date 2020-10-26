@@ -56,12 +56,15 @@ namespace Mriacx.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
+
+            services.AddCors(options => options.AddPolicy("all", p => p.AllowAnyOrigin()));
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            
             var projectName = string.IsNullOrEmpty(ProjectName) ? string.Empty : $".{ProjectName}";
             services.AddSwaggerGen(c =>
             {
@@ -107,6 +110,7 @@ namespace Mriacx.WebApi
                 //如果不想带/swagger路径访问的话，就放开下面的注释
                 //options.RoutePrefix = string.Empty;
             });
+            app.UseCors("all");
             app.UseMvc();
         }
     }
