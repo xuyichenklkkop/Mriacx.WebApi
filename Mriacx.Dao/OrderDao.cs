@@ -13,6 +13,8 @@ namespace Mriacx.Dao
 {
     public class OrderDao: BaseDao<OrderQueue>
     {
+        ConfigInfoDao configDao = new ConfigInfoDao();
+
         #region OrderQueue
         /// <summary>
         /// 获取所有订单列表
@@ -122,11 +124,14 @@ namespace Mriacx.Dao
         /// <returns></returns>
         public BaseMessage CreateOrderAndInfo(OrderModel model)
         {
-            BaseMessage respose = new BaseMessage()
+            BaseMessage respose = new BaseMessage();
+            var stock = configDao.GetOrderStock();
+            if (stock.Remain - model.Num < 0)
             {
-                IsSuccess = false,
-                Msg = ""
-            };
+                respose.Msg = "剩余库存不足";
+                return respose;
+            }
+
             var createTime = DateTime.Now;
             OrderQueue orderQueue = new OrderQueue()
             {
@@ -151,6 +156,8 @@ namespace Mriacx.Dao
             {
                 try
                 {
+                    stock.Remain -= model.Num;
+                    DbContext.Update<OrderStock>(stock,trans);
                     DbContext.Insert(orderQueue, trans);
                     DbContext.Insert(info, trans);
                     trans.Commit();
@@ -158,7 +165,7 @@ namespace Mriacx.Dao
                 catch (Exception ex)
                 {
                     trans.Rollback();
-                    respose.Msg = "异常"+ex.ToString();
+                    respose.Msg = "异常" + ex.ToString();
                 }
             }
             respose.IsSuccess = true;

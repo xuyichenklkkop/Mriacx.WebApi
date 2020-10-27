@@ -12,6 +12,8 @@ namespace Mriacx.Service
     public class OrderService
     {
         OrderDao orderDao = new OrderDao();
+        ConfigInfoDao configDao = new ConfigInfoDao();
+
 
         /// <summary>
         /// 获取所有OrderQueue
@@ -96,7 +98,9 @@ namespace Mriacx.Service
         /// <returns></returns>
         public BaseMessage CreateOrderAndInfo(OrderModel model)
         {
-            return orderDao.CreateOrderAndInfo(model);
+            BaseMessage response = new BaseMessage();
+            response = orderDao.CreateOrderAndInfo(model);
+            return response;
         } 
         #endregion
 

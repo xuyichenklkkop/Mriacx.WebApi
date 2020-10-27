@@ -8,6 +8,8 @@ using Mriacx.Service;
 
 namespace Mriacx.WebApi.Controllers
 {
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class ConfigInfoController : Controller
     {
 
@@ -17,9 +19,11 @@ namespace Mriacx.WebApi.Controllers
         /// 获取所有配置
         /// </summary>
         /// <returns></returns>
-        public List<ConfigInfo> GetAllList()
+        public AllConfigInfo GetAllList()
         {
             return service.GetAllList();
         }
+
+        
     }
 }

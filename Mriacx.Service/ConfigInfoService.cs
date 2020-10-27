@@ -15,11 +15,17 @@ namespace Mriacx.Service
         /// 获取所有配置
         /// </summary>
         /// <returns></returns>
-        public List<ConfigInfo> GetAllList() 
+        public AllConfigInfo GetAllList() 
         {
-            return configDao.GetAllList();
+            var configList = configDao.GetAllList();
+            AllConfigInfo all = new AllConfigInfo();
+            var stock = configDao.GetOrderStock();
+            all.ConfigList = configList;
+            all.StockInfo = stock;
+            return all;
         }
 
+        
         /// <summary>
         /// 根绝类型获取配置
         /// </summary>

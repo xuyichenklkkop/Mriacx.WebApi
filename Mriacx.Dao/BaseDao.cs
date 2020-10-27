@@ -25,8 +25,6 @@ namespace Mriacx.Dao
     /// <typeparam name="T"></typeparam>
     public class BaseDao<T> : BaseDao where T : class, new()
     {
-
-
         /// <summary>
         /// 获取所有列表
         /// </summary>
