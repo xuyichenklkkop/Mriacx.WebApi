@@ -31,6 +31,8 @@ namespace Mriacx.WebApi
         /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
+            //没这句话，有些机器可以跑，有些不行
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
             var assemblyName = Assembly.GetExecutingAssembly().FullName;
             ProjectName = assemblyName.RemoveEmptySplit(',').First().RemoveEmptySplit('.').Last();
             ProjectName = ProjectName == "WebApi" ? "" : ProjectName;
@@ -39,7 +41,7 @@ namespace Mriacx.WebApi
               .SetBasePath(env.ContentRootPath)
               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
+           
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }

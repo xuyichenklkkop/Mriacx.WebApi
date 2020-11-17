@@ -15,7 +15,7 @@ namespace Mriacx.Dao
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
           .SetBasePath(Directory.GetCurrentDirectory())
-          .AddJsonFile("appsettings.Development.json")
+          .AddJsonFile("appsettings.json")
           .Build();
 
             var dapper = DapperHelper.GetInstance(configuration);
