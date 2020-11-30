@@ -52,11 +52,17 @@ namespace Mriacx.Dao
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<OrderModel> GetOrderQueueAndInfoList()
+        public List<OrderModel> GetOrderQueueAndInfoList(int type)
         {
-            var sql = "select oq.OrderNum,oq.CreateTime,oq.Status,oq.Num,oi.HQID,oi.FontType," +
+            var wheresql = " where 1=1 ";
+            if (type == 0)
+            {
+                wheresql = " and Status>0 ";
+            }
+            var sql = "select oq.OrderNum,oq.CreateTime,oq.Status,oq.Num,oi.HQID,oi.FontType,oq.OrderType," +
                 "oi.Content,oi.SignName,oi.CoName,oi.CoAddr,oi.CoTelPhone " +
                 "from OrderQueue oq inner join OrderInfo oi on oq.OrderNum = oi.HQID";
+            sql = sql + wheresql;
             var list = DbContext.Query<OrderModel>(sql).ToList();
             return list;
         }
@@ -138,7 +144,8 @@ namespace Mriacx.Dao
                 CreateTime = createTime,
                 Num = model.Num,
                 Status = 0,
-                OrderNum = GuidCreator.GetUniqueKey("INK")
+                OrderNum = GuidCreator.GetUniqueKey("INK"),
+                OrderType =model.OrderType
             };
 
             OrderInfo info = new OrderInfo()

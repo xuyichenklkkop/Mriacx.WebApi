@@ -76,9 +76,9 @@ namespace Mriacx.Service
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<OrderModel> GetOrderQueueAndInfoList()
+        public List<OrderModel> GetOrderQueueAndInfoList(int type)
         {
-            return orderDao.GetOrderQueueAndInfoList();
+            return orderDao.GetOrderQueueAndInfoList(type);
         }
 
         /// <summary>
@@ -119,9 +119,15 @@ namespace Mriacx.Service
         /// </summary>
         /// <param name="queue"></param>
         /// <returns></returns>
-        public int UpdateOrder(OrderQueue queue)
+        public int UpdateOrder(string orderNum, int status)
         {
-            return orderDao.UpdateOrder(queue);
+            var order = orderDao.GetOrderQueueByOrderNum(orderNum);
+            if (order == null || order.Id <= 0)
+            {
+                return 0;
+            }
+            order.Status = status;
+            return orderDao.UpdateOrder(order);
         }
     }
 }

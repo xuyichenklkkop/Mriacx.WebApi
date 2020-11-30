@@ -43,14 +43,40 @@ namespace Mriacx.WebApi.Controllers
 
         #region OrderModel
         /// <summary>
-        /// 
+        /// api1
         /// </summary>
-        /// <returns></returns>getorderqueueandinfolist
+        /// <returns></returns>
         [HttpGet]
-        public List<OrderModel> GetOrderQueueAndInfoList()
+        public List<OrderModel> GetOrderQueueAndInfoList(int type = 0)
         {
-            return service.GetOrderQueueAndInfoList();
+            return service.GetOrderQueueAndInfoList(type);
         }
+
+
+        /// <summary>
+        /// 完成订单 api2
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public BaseMessage MoveOrderToHistory(string orderNum)
+        {
+            return service.MoveOrderToHistory(orderNum);
+        }
+        /// <summary>
+        /// 修改订单状态 api3
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public BaseMessage UpdateOrder(string orderNum, int status)
+        {
+            BaseMessage response = new BaseMessage();
+            var result = service.UpdateOrder(orderNum, status);
+            response.IsSuccess = (result > 0) ? true : false;
+            response.Msg = (result > 0) ? "操作成功" : "操作失败";
+            return response;
+        }
+
 
         /// <summary>
         /// 根据OrderNum获取订单
@@ -72,29 +98,9 @@ namespace Mriacx.WebApi.Controllers
         public BaseMessage CreateOrderAndInfo([FromBody] OrderModel model)
         {
             return service.CreateOrderAndInfo(model);
-        } 
+        }
         #endregion
 
-        /// <summary>
-        /// 完成订单
-        /// </summary>
-        /// <param name="orderNum"></param>
-        /// <returns></returns>
-        public BaseMessage MoveOrderToHistory(string orderNum)
-        {
-            return service.MoveOrderToHistory(orderNum);
-        }
-
-        /// <summary>
-        /// 完成订单并挪到OrderHistory
-        /// </summary>
-        /// <param name="orderQueue"></param>
-        /// <returns></returns>
-        public JsonResult UpdateOrder(OrderQueue orderQueue)
-        {
-            var result = service.UpdateOrder(orderQueue);
-            return Json(result);
-        }
 
         /// <summary>
         /// 审核订单状态

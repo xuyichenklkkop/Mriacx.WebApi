@@ -26,5 +26,10 @@ namespace Mriacx.Entity
         /// 数量
         /// </summary>
         public int Num { get; set; }
+
+        /// <summary>
+        /// 订单品类
+        /// </summary>
+        public int OrderType { get; set; }
     }
 }
