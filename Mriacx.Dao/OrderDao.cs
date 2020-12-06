@@ -41,6 +41,18 @@ namespace Mriacx.Dao
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public OrderInfo GetOrderInfoByOrderNum(string orderNum) 
+        {
+            var sql = "select  * from OrderInfo where HQID=@OrderNum;";
+            var item = DbContext.QuerySingle<OrderInfo>(sql, new { OrderNum = orderNum });
+            return item;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="oQueue"></param>
         /// <returns></returns>
         public int UpdateOrder(OrderQueue oQueue)
@@ -54,14 +66,16 @@ namespace Mriacx.Dao
         /// <returns></returns>
         public List<OrderModel> GetOrderQueueAndInfoList(int type)
         {
-            var wheresql = " where 1=1 ";
+            var wheresql = string.Empty;
             if (type == 0)
             {
                 wheresql = " and Status>0 ";
             }
             var sql = "select oq.OrderNum,oq.CreateTime,oq.Status,oq.Num,oi.HQID,oi.FontType,oq.OrderType," +
-                "oi.Content,oi.SignName,oi.CoName,oi.CoAddr,oi.CoTelPhone " +
-                "from OrderQueue oq inner join OrderInfo oi on oq.OrderNum = oi.HQID";
+                "oi.Content,oi.SignName,oi.CoName,oi.CoAddr,oi.CoTelPhone,oc.Text as  OrderTypeText " +
+                "from OrderQueue oq inner join OrderInfo oi on oq.OrderNum = oi.HQID " +
+                  " left join ConfigInfo oc  on oq.OrderType  = oc.Name " +
+                    "where oc.Type ='OrderType' ";
             sql = sql + wheresql;
             var list = DbContext.Query<OrderModel>(sql).ToList();
             return list;
@@ -116,10 +130,11 @@ namespace Mriacx.Dao
         /// <returns></returns>
         public OrderModel GetOrderModel(string orderNum)
         {
-            var sql = "select oq.OrderNum,oq.CreateTime,oq.Status,oq.Num,oi.HQID,oi.FontType," +
-               "oi.Content,oi.SignName,oi.CoName,oi.CoAddr,oi.CoTelPhone " +
+            var sql = "select oq.OrderNum,oq.CreateTime,oq.Status,oq.Num,oq.OrderType,oi.HQID,oi.FontType," +
+               "oi.Content,oi.SignName,oi.CoName,oi.CoAddr,oi.CoTelPhone,oc.Text as  OrderTypeText " +
                "from OrderQueue oq inner join OrderInfo oi on oq.OrderNum = oi.HQID " +
-               "where oq.OrderNum = @OrderNum;";
+               "left join ConfigInfo oc  on oq.OrderType  = oc.Name "+
+               "where oq.OrderNum = @OrderNum and oc.Type ='OrderType';";
             var item = DbContext.Query<OrderModel>(sql, new { OrderNum = orderNum }).FirstOrDefault();
             return item;
         }
@@ -179,6 +194,39 @@ namespace Mriacx.Dao
             respose.Msg = "创单成功";
             return respose;
         }
+
+        /// <summary>
+        /// 删除订单
+        /// </summary>
+        /// <returns></returns>
+        public BaseMessage DeleteOrder(string orderNum)
+        {
+            BaseMessage response = new BaseMessage();
+            var orderqueue = this.GetOrderQueueByOrderNum(orderNum);
+            var orderinfo = this.GetOrderInfoByOrderNum(orderNum);
+            var stock = configDao.GetOrderStock();
+            using (var trans = DbContext.BeginTransaction())
+            {
+                try
+                {
+                    stock.Remain += orderqueue.Num;
+                    DbContext.Update<OrderStock>(stock, trans);
+                    DbContext.Delete(orderqueue, trans);
+                    DbContext.Delete(orderinfo, trans);
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    response.Msg = "异常" + ex.ToString();
+                }
+            }
+            response.IsSuccess = true;
+            response.Msg = "删除成功";
+            return response;
+
+        }
+
         #endregion
     }
 }

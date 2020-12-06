@@ -115,7 +115,7 @@ namespace Mriacx.Service
         }
 
         /// <summary>
-        /// 
+        /// 修改订单状态
         /// </summary>
         /// <param name="queue"></param>
         /// <returns></returns>
@@ -129,5 +129,16 @@ namespace Mriacx.Service
             order.Status = status;
             return orderDao.UpdateOrder(order);
         }
+
+        /// <summary>
+        /// 删除订单
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public BaseMessage DeleteOrder(string orderNum)
+        {
+            return orderDao.DeleteOrder(orderNum);
+        }
+
     }
 }

@@ -53,5 +53,7 @@ namespace Mriacx.Entity.Model
         /// </summary>
         public int OrderType { get; set; }
 
+        public string OrderTypeText { get; set; }
+
     }
 }

@@ -62,6 +62,7 @@ namespace Mriacx.WebApi.Controllers
         {
             return service.MoveOrderToHistory(orderNum);
         }
+
         /// <summary>
         /// 修改订单状态 api3
         /// </summary>
@@ -75,6 +76,16 @@ namespace Mriacx.WebApi.Controllers
             response.IsSuccess = (result > 0) ? true : false;
             response.Msg = (result > 0) ? "操作成功" : "操作失败";
             return response;
+        }
+
+        /// <summary>
+        /// 删除订单
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <returns></returns>
+        public BaseMessage DeleteOrder(string orderNum)
+        {
+            return service.DeleteOrder(orderNum);
         }
 
 
