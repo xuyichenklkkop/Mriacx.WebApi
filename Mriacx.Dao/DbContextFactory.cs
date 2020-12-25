@@ -18,8 +18,8 @@ namespace Mriacx.Dao
           .AddJsonFile("appsettings.json")
           .Build();
 
-            var dapper = DapperHelper.GetInstance(configuration);
-            var dbcontext = dapper.GetConnection();
+            DapperHelper.GetInstance(configuration);
+            var dbcontext = DapperHelper.GetConnection();
             return dbcontext;
         }
     }

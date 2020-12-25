@@ -54,7 +54,7 @@ namespace Mriacx.Utility
             return uniqueInstance;
         }
 
-        public IDbConnection GetConnection()
+        public static IDbConnection GetConnection()
         {
             if (dbConnection == null)
             {
